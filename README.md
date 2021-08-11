@@ -1,70 +1,98 @@
-# Getting Started with Create React App
+# React项目创建到部署到Github-Pages
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 项目创建
 
-## Available Scripts
+1. 环境
 
-In the project directory, you can run:
+   ​	[node](https://nodejs.org/en/download/) >=10.16和node管理工具[yarn](https://yarn.bootcss.com/docs/install/#mac-stable)
 
-### `yarn start`
+2. Create React App
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+   官方提供的方法如下：
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+   ```shell
+   npx create-react-app my-app
+   cd my-app
+   npm start
+   ```
 
-### `yarn test`
+   
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. 查看webpack相关信息
 
-### `yarn build`
+   ````shell
+   yarn eject
+   ````
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. 删除文件从零开始
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   * 将src下的所有文件都删除
 
-### `yarn eject`
+   * 将public文件下除favicon.ico（应用程序顶部icon图标）和index.html（应用程序的入口文件）之外的文件都删除掉
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   * 删除public->index.html中两个link标签
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   * 编写代码
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+     在src目录下，创建一个index.js，手动导入React、ReactDOM
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+     ```js
+     import React from "react";
+     import ReactDOM from 'react-dom';
+     
+     ReactDOM.render(<h1>Hello React</h1>, document.getElementById("root"));
+     ```
 
-## Learn More
+### 将项目部署到Github-Pages
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. 安装gh-pages
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   ```shell
+   npm install gh-pages --save-dev
+   ```
 
-### Code Splitting
+   
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. 修改package.json
 
-### Analyzing the Bundle Size
+   * 新增homepage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+     ```shell
+     "name": "react_demo",
+      "version": "1.1.0",
+      "private": true,
+      "homepage": "./",  //加上这一句
+     ```
 
-### Making a Progressive Web App
+   * 新增deploy
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+     ```shell
+     "scripts": {
+             ...
+          	"deploy": "gh-pages -d build" //加上这一句
+     }
+     ```
 
-### Advanced Configuration
+3. 推送项目
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+   * 编译
 
-### Deployment
+     ```shell
+     yarn build
+     ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+   * 推送
 
-### `yarn build` fails to minify
+     ```shell
+     yarn deploy
+     ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   完成以上操作后github上会多出一个叫gh-pages的分支，在设置中将Pages的分支选择为gh-pages分支，选择root保存，部署完成。
+
+### 以上来自对下面两篇文章的整合
+
+> [create-react-app项目部署到Github-Pages](https://segmentfault.com/a/1190000019290048)
+
+> [Rect脚手架](https://zhuanlan.zhihu.com/p/149712752)
